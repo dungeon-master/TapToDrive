@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorMainFrame">@android:color/white</color>
+    <color name="colorCar">@android:color/holo_orange_dark</color>
+    <color name="colorDestination">@android:color/holo_green_light</color>
 </resources>

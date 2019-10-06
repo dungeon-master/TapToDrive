@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="carWidth">20dp</dimen>
+    <dimen name="carHeight">50dp</dimen>
+    <dimen name="destinationSize">10dp</dimen>
+</resources>
