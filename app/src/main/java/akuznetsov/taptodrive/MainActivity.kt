@@ -1,12 +1,10 @@
 package akuznetsov.taptodrive
 
 import akuznetsov.taptodrive.view.CarView
-import akuznetsov.taptodrive.view.DestinationView
 import android.app.Activity
 import android.os.Bundle
 import android.view.Gravity
-import android.view.MotionEvent
-import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams
 
@@ -25,40 +23,19 @@ class MainActivity : Activity() {
 
         mainFrame.addView(carView, carLayoutParams)
 
-        mainFrame.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                if (event.action == MotionEvent.ACTION_DOWN) {
-                    val destinationView = DestinationView(this@MainActivity)
-                    val destinationLayoutParams = LayoutParams(
-                        LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT)
+        val movementController = MovementController(carView)
+        movementController.setOnDestinationReachedListener { destinationView ->
+            mainFrame.removeView(destinationView)
+        }
 
-                    destinationView.x = event.x
-                    destinationView.y = event.y
-
-                    mainFrame.addView(destinationView, destinationLayoutParams)
-
-                    return true
-                }
-
-                return false
+        val globalLayoutListener = object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                movementController.initCarCenter()
+                carView.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
-        })
-    }
+        }
+        carView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+        mainFrame.setOnTouchListener(FrameTouchListener(mainFrame, movementController))
     }
 }
