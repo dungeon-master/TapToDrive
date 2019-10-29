@@ -7,7 +7,7 @@ import akuznetsov.taptodrive.view.DestinationView
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.graphics.PointF
-import android.view.animation.AccelerateInterpolator
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 
 class MovementController(private val mCar: CarView) {
@@ -69,7 +69,7 @@ class MovementController(private val mCar: CarView) {
         mCar.animate()
             .translationXBy(destination.x - mCarCenter.x)
             .translationYBy(destination.y - mCarCenter.y)
-            .setInterpolator(AccelerateInterpolator())
+            .setInterpolator(AccelerateDecelerateInterpolator())
             .setDuration(MOVE_DURATION)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
